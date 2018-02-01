@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AB Tutor Server Administration</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/ionicons.min.css">
+  <link rel="stylesheet" href="static/css/AdminLTE.min.css">
+  <link rel="shortcut icon" type="image/x-icon" href="static/favicon.ico" />
+  <link rel="stylesheet" href="static/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="static/css/globe.css" />
+  <link rel="stylesheet" href="static/css/bootstrap-switch.min.css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="static/js/html5shiv.min.js"></script>
+  <script src="static/js/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="static/css/SourceSansPro.css">
+  <link rel="stylesheet" href="static/css/MaterialIcons.css">
+
+  <script src="static/script/angular.min.js"></script>
+  <script src="static/script/angular-ui-router.js"></script>
+  <script src="static/script/angular-breadcrumb.min.js"></script>
+  <script src="static/script/checklist-model.js"></script>
+  <script src="static/script/angular-resource.min.js"></script>
+  <script src="static/script/http-auth-interceptor.js"></script>
+  <script src="static/script/dirPagination.js"></script>
+  <script src="static/script/Chart.bundle.min.js"></script>
+  <script src="static/script/angular-chart.min.js"></script>
+  <!-- jQuery 3.1.1 -->
+  <script src="static/plugins/jQuery/jquery-3.1.1.min.js"></script>
+  <script>
+    var app = angular.module('abapp', ['ui.router','http-auth-interceptor','login','content','ncy-angular-breadcrumb','checklist-model','angularUtils.directives.dirPagination','chart.js'])
+      .constant('rootURL', '')
+      .constant('lmsURL', 'https://www.abtutor.com')
+      .constant('productCode', 'CS09')
+      .run([
+        '$http',
+        'DeviceService',
+        'UserService',
+        'DeviceService',
+        'SessionService',
+        'SettingService',
+        'DebugService',
+        '$rootScope',
+        '$state',
+        '$stateParams',
+        function (
+          $http,
+          DeviceService,
+          UserService,
+          DeviceService,
+          SessionService,
+          SettingService,
+          DebugService,
+          $rootScope,
+          $state,
+          $stateParams,
+          scope
+        ) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+          if (toState.redirectTo) {
+            event.preventDefault();
+            $state.go(toState.redirectTo, toParams);
+          }
+        });
+      }])
+
+      .directive('authApplication', function() {
+        return {
+          restrict: 'C',
+          link: function(scope, element, attrs) {
+            //once Angular is started, remove class:
+            element.removeClass('waiting-for-angular');
+
+            var login = $('.login-holder');
+            var main = $('#wrapper');
+              login.show();
+
+
+            scope.$on('event:auth-loginRequired', function() {
+              main.hide();
+              login.show();
+            });
+            scope.$on('event:auth-loginConfirmed', function() {
+              login.hide();
+              main.show();
+            });
+          }
+        }
+      })
+      .directive('ngConfirmClick', [
+        function(){
+        return {
+          link: function (scope, element, attr) {
+            var msg = attr.ngConfirmClick;
+            var clickAction = attr.confirmedClick;
+            element.bind('click',function (event) {
+        
+              $('#confirmmodal').modal('show');
+              $('.modal-body').html(msg);
+              $('#confirmclick').click(function() {
+                            
+                scope.$eval(clickAction)
+
+                $('#confirmmodal').modal('hide');
+                $('#confirmclick').unbind( "click" );
+              });
+
+              $('#cancelclick').click(function() {
+                $('#confirmmodal').modal('hide');
+                $('#confirmclick').unbind( "click" );
+              });
+            });
+          }
+        }
+      }])
+  </script>
+  <script src="static/script/routes.js"></script>
+
+<!--  <script src="static/script/controller/controller.js"></script>
+  <script src="static/script/service/services.js"></script>-->
+
+  <script src="static/script/controller/login.js"></script>
+  <script src="static/script/controller/nav.js"></script>
+  <script src="static/script/controller/topnav.js"></script>
+  <script src="static/script/controller/messages.js"></script>
+  <script src="static/script/service/user.js"></script>
+  <script src="static/script/service/device.js"></script>
+  <script src="static/script/service/session.js"></script>
+  <script src="static/script/service/setting.js"></script>
+  <script src="static/script/service/group.js"></script>
+  <script src="static/script/controller/home.js"></script>
+  <script src="static/script/controller/dash.js"></script>
+  <script src="static/script/controller/users/list.js"></script>
+  <script src="static/script/controller/users/create.js"></script>
+  <script src="static/script/controller/users/edit.js"></script>
+  <script src="static/script/controller/devices/list.js"></script>
+  <script src="static/script/controller/devices/requests.js"></script>
+  <script src="static/script/controller/devices/authenticated.js"></script>
+  <script src="static/script/controller/devices/revoked.js"></script>
+  <script src="static/script/controller/devices/rejected.js"></script>
+  <script src="static/script/controller/devices/devices.js"></script>
+  <script src="static/script/controller/settings/settings.js"></script>
+  <script src="static/script/controller/settings/sync.js"></script>
+  <script src="static/script/controller/settings/sync/create.js"></script>
+  <script src="static/script/controller/settings/sync/edit.js"></script>
+  <script src="static/script/controller/settings/email.js"></script>
+  <script src="static/script/controller/settings/licence.js"></script>
+  <script src="static/script/controller/settings/signing.js"></script>
+  <script src="static/script/controller/settings/signing/create.js"></script>
+  <script src="static/script/controller/settings/signing/edit.js"></script>
+  <script src="static/script/controller/settings/backup.js"></script>
+  <script src="static/script/controller/settings/proxy.js"></script>
+  <script src="static/script/controller/devicesettings/systemmessages.js"></script>
+  <script src="static/script/controller/devicesettings/proxy.js"></script>
+  <script src="static/script/controller/devicesettings/security.js"></script>
+  <!-- DEBUG -->
+  <script src="static/script/service/debug.js"></script>
+  <script src="static/script/controller/debug/debug.js"></script>
+  <!-- END DEBUG -->
+</head>
+<body ng-app="abapp" class="auth-application hold-transition skin-blue sidebar-mini">
+<noscript>This application requires JavaScript and it is currently disabled</noscript>
+<div id="loginbox" class="login-box login-holder" style="display:none;">
+  <div class="login-logo">
+<img src="static/images/abweblogolg.png" />
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign in to start your session</p>
+
+    <form id="loginform" ng-controller="LoginController" ng-submit="submit()">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Username" required ng-model="credentials.username" autofocus/>
+        <span class="material-icons form-control-feedback">person</span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Password" ng-model="credentials.password">
+        <span class="material-icons form-control-feedback">lock</span>
+      </div>
+        <div class="col-xs-12" style="text-align:center">
+          <p style="color:red;">{{ loginerror }}</p>
+        </div>
+        <div class="col-xs-8">
+        </div>
+        <div class="col-xs-4">
+          <button type="submit" class="btn-login btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+
+
+
+
+  <div id="wrapper" class="wrapper" style="display:none;">
+
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="#" class="logo" style="background:white;">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>AB</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><img src="static/images/abweblogo.png" /></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation" ng-controller="topnav">
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <!-- User Account Menu -->
+          <li class="dropdown user user-menu">
+            <!-- Menu Toggle Button -->
+            <a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">
+              <!-- hidden-xs hides the username on small devices so only the image appears. -->
+              <i class="material-icons" aria-hidden="true">settings</i>
+              <span class="hidden-xs">Welcome</span>
+              <span class="hidden-xs" ng-bind="user.username"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#/users/{{ user.id}}/edit" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" ng-click="logout()" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+        </ul>
+      </div>
+    </nav>
+  </header>
+        <!-- Sidebar -->
+    <div>
+      <div ng-include="'nav.html'"></div>
+    </div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="position:relative">
+      <div ng-controller="server">
+        <div ng-show="communicationerror" style="position:absolute; left:0; right:0; z-index:10000; height:100%; width:100%; background:rgba(0,0,0,0.7);">
+          <div style="margin-left:auto; margin-right:auto; color:white; width:50%; text-align:center; background:#d13e3e; padding:2px 5px 10px 5px; border-radius:1em; margin-top:20%;">
+            <h2>Connection to server lost</h2>
+            <h4>The connection to the server was lost, <span ng-click="reconnect()" style="margin-left:5px;" class="btn btn-sm btn-success">Reconnect?</span></h4>
+          </div>
+        </div>
+        <div ng-show="loading" style="position:absolute; left:0; right:0; z-index:10000; height:100%; width:100%; background:rgba(0,0,0,0.7);">
+          <div style="margin-left:auto; margin-right:auto; color:white; width:50%; text-align:center; padding:2px 5px 10px 5px; border-radius:1em; margin-top:20%;">
+            <div class="lds-css ng-scope">
+              <div class="lds-spinner" style=" margin-left:auto; margin-right:auto;100%;height:100%"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            </div>            
+            <h3 style="margin-top:0px;">Loading...</h3>
+          </div>
+        </div>
+      </div>
+      <div ncy-breadcrumb>
+        <ol class="breadcrumb">
+          <li ng-repeat="step in steps" href="{{ step.ncyBreadcrumbLink }}"> {{step.ncyBreadcrumbLabel}} </li>
+        </ol>
+        <span ncy-breadcrumb-text></span>
+      </div>
+    <!-- Content Header (Page header) -->
+<!--    <section class="content-header" style="margin-top:-20px;">
+      <h1 ncy-breadcrumb-last>
+      </h1>
+    </section>-->
+    <div class="row" style="padding-left: 15px; padding-right: 15px;">
+      <div class="col-md-12">
+        <!-- Main content -->
+        <div ng-controller="messagesController">
+          <div ng-show="successmsg" ng-bind="successmsg" class="alert alert-success" role="alert">
+          </div>
+          <div ng-show="warningmsg" ng-bind="warningmsg" class="alert alert-warning" role="alert">
+          </div>
+          <div ng-show="errormsg" ng-bind="errormsg" class="alert alert-danger" role="alert">
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="content container-fluid" ui-view>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+<!-- Main Footer -->
+  <footer class="main-footer" ng-controller="dash">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      <span ng-show="updateAvaliable" style="color:red; margin-right:10px;">
+        <span ng-show="update.url">
+        <a href="{{ update.url }}" target="_blank">Update avaliable</a>
+        </span>
+        <span ng-hide="update.url">
+        Update available
+        </span>
+      </span>
+      Server Version: {{ server.majorVersion }}.{{ server.minorVersion }}.{{ server.patchVersion }}.{{ server.buildVersion }}, Database Version: {{ server.database }}
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2018 <a href="https://www.abtutor.com">AB Tutor</a>.</strong> All rights reserved.
+  </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="confirmmodal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content panel-danger">
+          <div class="modal-header panel-heading">
+            <h4 class="modal-title" id="myModalLabel">Confirm Delete?</h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <span class="btn btn-default" id="cancelclick" data-dismiss="modal">Cancel</span>
+            <span class="btn btn-danger" id="confirmclick">Delete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- Bootstrap 3.3.7 -->
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="static/js/adminlte.js"></script>
+
+</body>
+</html>

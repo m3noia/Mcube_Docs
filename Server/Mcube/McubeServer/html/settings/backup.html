@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <h4>Backup</h4>
+        <p>Click backup to download a backup of your servers configuration, this includes all the devices, users, policies and settings required to restore your server to the current state.</p>
+        <div style="text-align:center;">
+          <a href="/server/settings/export" target="_blank"><span class="btn btn-success">Backup</span></a>
+        </div>
+        <h4>Restore</h4>
+        <p>Select the tar file that you downloaded from this page previously. Once selected it will be automatically uploaded to the server, when finished the service will need to be manually restarted for the restore to complete.</p>
+        <div class="row">
+          <div class="col-md-6">
+            <form id="restoreForm" name="restoreForm" ng-submit="submitRestoreForm($('#file').files)" role="form" enctype="multipart/form-data">
+              <input type="file" name="file" class="form-control" id="file" onchange="angular.element(this).scope().submitRestore(this.files)"/>
+            </form>
+          </div>
+          <div class="col-md-6" style="color:green; font-weight:bold;" ng-bind="uploadSuccess">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

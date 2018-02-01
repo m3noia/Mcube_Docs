@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <form name="userForm" ng-submit="submitForm()" role="form">
+          <div class="box-body">
+            <div class="form-group">
+              <input type="checkbox" class="popup" ng-model="data.settings.preventServiceStop" />
+              <label class="control-label">Prevent the AB Client service from being stopped (Windows only)</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" class="popup" ng-model="data.settings.preventUninstall" />
+              <label class="control-label">Prevent the AB Client program from being uninstalled via Add/Remove programs (Windows only)</label>
+            </div>
+            <div class="form-group">
+              <input type="checkbox" class="popup" ng-model="data.settings.startInSafeMode" />
+              <label class="control-label">Start the AB Client service if Windows is booted in Safe Mode with Networking (Windows only)</label>
+            </div>
+          </div>
+          <div class="box-footer pull-right">
+            <button type="submit" name="go" class="btn btn-success">Save</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>

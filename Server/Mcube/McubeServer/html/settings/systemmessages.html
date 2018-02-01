@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <form name="userForm" ng-submit="submitForm()" role="form">
+          <div class="box-body">
+            <p>Enter the text you would like to appear when an application or web page is blocked due to policies set on the remote client</p>
+            <div class="form-group">
+              <label class="control-label">Message Box Title :</label>
+              <input type="text" class="form-control" required ng-model="data.settings.boxTitle" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Application Blocked Message :</label>
+              <textarea class="form-control" required ng-model="data.settings.applicationBlockedMessage"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Don't show popup message box for HTTPS blocking :</label>
+              <input type="checkbox" class="popup" ng-model="data.settings.httpsPopupBlock" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Web Site Blocked Message :</label>
+              <textarea class="form-control" required ng-model="data.settings.websiteBlockedMessage"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Printer Blocked Message :</label>
+              <textarea class="form-control" required ng-model="data.settings.printerBlockedMessage"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Drive Blocked Message :</label>
+              <textarea class="form-control" required ng-model="data.settings.driveBlockedMessage"></textarea>
+            </div>
+          </div>
+          <div class="box-footer pull-right">
+            <button type="submit" name="go" class="btn btn-success">Save</button>
+          </div>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>

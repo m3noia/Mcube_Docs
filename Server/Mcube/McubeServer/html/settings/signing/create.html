@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+
+        <form name="userForm" ng-submit="submitForm()" class="form-horizontal">
+          <div class="control-group">
+            <label class="control-label">Name :</label>
+            <input type="text" class="form-control" required ng-model="rule.name" />
+          </div>
+          <div class="control-group">
+            <label class="control-label">Match Pattern :</label>
+            <input type="text" class="form-control" required ng-model="rule.pattern" placeholder="Regex for the FQDN match" />
+            <span class="help-block">For more information on Regular Expressions see <a href="https://en.wikipedia.org/wiki/Regular_expression" target="_blank">Wikipedia: Regular expression</a></span>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Certificate Lifespan :</label>
+            <input type="number" class="form-control" min="0" step="1" required ng-model="rule.certificateLifespan" />
+          </div>
+          <div class="control-group">
+            <label class="control-label">Device Expiry :</label>
+            <input type="number" class="form-control" min="0" step="1" required ng-model="rule.deviceExpiry" />
+            <span class="help-block">The device will be removed from the system this number of minutes after last contact (Events from the removed device will still be viewable)</span>
+          </div>
+          <div class="form-actions" style="border-top: 1px solid #e5e5e5;">
+            <button type="submit" name="go" class="btn btn-success">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

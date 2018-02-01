@@ -1,0 +1,76 @@
+    <div ng-show="show.details">
+      <form id="userForm" name="userForm" ng-submit="submitUserForm()" role="form">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Please enter the users details.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Username :</label>
+              <input type="text" class="form-control" placeholder="Username" required ng-model="user.username"/>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Password :</label>
+              <input type="password"  class="form-control" placeholder="Enter Password" required ng-model="user.password" />
+           </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">Firstname :</label>
+              <input type="text" class="form-control" placeholder="John" required ng-model="user.firstname" />
+            </div>
+            <div class="form-group">
+              <label class="control-label">Lastname :</label>
+              <input type="text" class="form-control" placeholder="Smith" required ng-model="user.lastname" />
+            </div>
+          </div>
+        </div>
+        <div class="form-actions" style="float:right">
+          <button type="submit" name="go" class="btn btn-success">Create User</button>
+        </div>
+      </form>
+    </div>
+    <div ng-show="show.roles">
+      <form id="roleForm" name="roleForm" ng-submit="submitRoleForm()" role="form">
+        <div class="row">
+          <div class="col-md-12">
+            <p>The user has been created, you can now select any roles you would like the user to have.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">User Types :</label>
+              <div class="radio" ng-repeat="role in userTypes | orderBy:'name'">
+                <label>
+                  <input type="checkbox" checklist-model="user.roles" checklist-value="role.id">
+                  {{ role.name }}<br /><div style="margin-left:20px;"><i>{{ role.description }}</i></div>
+                </label>
+              </div>
+             <div>
+           </div>
+           <div ng-repeat="type in userTypes" ng-show="showTypes[type.id].show && type.children.length">
+             <br />
+             <strong>{{ type.name }} Roles :</strong>
+             <div class="form-group">
+               <div class="radio" ng-repeat="role in roles[type.id]">
+                 <label>
+                   <input type="checkbox" checklist-model="user.roles" checklist-value="role.id">
+                   {{ role.name }}<br /><div style="margin-left:20px;"><i>{{ role.description }}</i></div>
+                 </label>
+               </div>
+             </div>
+           </div>
+        </div>
+ 
+          </div>
+        </div>
+            <div class="form-actions" style="float:right">
+              <button type="submit" name="go" style="float:right; margin-left:10px;" class="btn btn-success">Assign Roles</button>
+            </div>
+      </div>
+    </div>

@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <form name="userForm" ng-submit="submitForm()" class="form-horizontal">
+          <div class="col-md-6">
+            <div class="control-group">
+              <label class="control-label">Group :</label>
+              <input type="text" class="form-control" disabled="disabled" value="{{ group.meta.name }}" />
+            </div>
+            <div class="control-group">
+              <label class="control-label">Name :</label>
+              <input type="text" class="form-control" required ng-model="sync.name" />
+            </div>
+            <div class="control-group">
+              <label class="control-label">Domain :</label>
+              <input type="text" class="form-control" required ng-model="sync.domain" />
+            </div>
+            <div class="control-group">
+              <label class="control-label">Distinguished Name :</label>
+              <input type="text" class="form-control" required ng-model="sync.distinguishedName" placeholder="OU=IT Department,OU=Teachers,DC=example,DC=com" />
+            </div>
+            <div class="control-group">
+              <label class="control-label">Check Every (Minutes) :</label>
+              <input type="number" class="form-control" min="0" step="1" required ng-model="sync.frequency" />
+              <span class="help-block">0 to disable (can still be run manually)</span>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Update Type :</label>
+              <select class="form-control" name="update" ng-model="sync.update">
+                <option value="true">Update and Create (Update existing items as well as creating new)</option>
+                <option value="false">Create Only (Create new items only)</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="control-group" ng-show="group.isUserGroup">
+              <label class="control-label">Roles :</label>
+              <div class="radio" ng-repeat="role in roles">
+                <label>
+                  <input type="checkbox" checklist-model="sync.roles" checklist-value="role.id">
+                  {{ role.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div style="clear:both;"></div>
+          <div class="form-actions" style="padding:20px; text-align:right;">
+            <button type="submit" name="go" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

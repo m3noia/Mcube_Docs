@@ -1,0 +1,40 @@
+
+<div ng-show="showStats" style="position:absolute; top:0; left:0;height:100%; width:100%; z-index:100000; background-color: rgba(0,0,0,0.6);">
+  <div style="margin-left:auto; margin-right:auto; color:white; width:50%; text-align:center; background:#3c8dbc; padding:2px 5px 10px 5px; border-radius:1em; margin-top:10%; color:white; opacity:1;">
+    <h3>Accepting... Please wait</h3>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="{{ stats.percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ stats.percent }}%">
+        <span class="sr-only">{{ stats.percent }}% Complete</span>
+      </div>
+    </div>
+    <h4><span ng-bind="stats.done"></span> of <span ng-bind="stats.total"></span></h4>
+    <button class="btn btn-danger" style="margin-right:auto; margin-left:auto;" ng-click="cancel = true">Cancel</button>
+  </div>
+</div>
+<div ng-include="'search.html'"></div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-body no-padding">
+        <table class="table table-condensed">
+          <tr role="row">
+            <th class="ui-state-default" role="columnheader" style="width:35%">Hostname</th>
+            <th class="ui-state-default" role="columnheader">Requested</th>
+            <th class="ui-state-default" role="columnheader" style="width:140px;">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+          <tr dir-paginate="request in certificates |  itemsPerPage: pageSize" total-items="{{ totalitems }}" current-page="pagination.current" pagination-id="requests" data-uuid="{{ request.id }}">
+            <td>{{ request.commonName }}</td>
+            <td>{{ request.created | date: shortDate }}</td>
+            <td>
+              <button ng-click='signCertificateRequest(request)' class="btn btn-xs btn-success"><i class="material-icons">check</i> <span class="text">Accept</span></button>
+              <button ng-click='rejectCertificateRequest(request)' class="btn btn-xs btn-warning"><i class="material-icons">block</i>  <span class="text">Reject</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <dir-pagination-controls style="float:right; margin-right:20px;" on-page-change="pageChanged(newPageNumber)" pagination-id="requests"></dir-pagination-controls>
+    </div>         
+  </div>
+</div>

@@ -1,0 +1,15 @@
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: $state.includes('devicesettings.systemmessages')}" ui-sref-active="active">
+        <a ui-sref="devicesettings.systemmessages">System Messages</a>
+      </li>
+      <li ng-class="{active: $state.includes('devicesettings.proxy')}" ui-sref-active="active">
+        <a ui-sref="devicesettings.proxy">Device Proxy</a>
+      </li>
+      <li ng-class="{active: $state.includes('devicesettings.security')}" ui-sref-active="active">
+        <a ui-sref="devicesettings.security">Device Security</a>
+      </li>
+    </ul>
+    <div class="tab-content" style="padding:0px;" ui-view>
+    </div>
+  </div>

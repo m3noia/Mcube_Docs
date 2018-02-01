@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <form name="userForm" ng-submit="submitForm()" role="form">
+          <div class="box-body">
+            <div class="form-group">
+              <div class="checkbox">
+                <label class="control-label">
+                  <input type="checkbox" name="radios" ng-model="data.emailViolations" />
+                  <b>Enable Notifications</b>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Email To Address :</label>
+                  <input type="email" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.toEmail" placeholder="email@example.com" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Email From Address :</label>
+                  <input type="email" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.fromEmail" placeholder="email@example.com" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Email From Name :</label>
+                  <input type="text" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.fromName" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">SMTP Server :</label>
+                  <input type="text" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.emailServer" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">AB Server FQDN :</label>
+                  <input type="text" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.localDomain" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">SMTP Server Port :</label>
+                  <input type="number" step="1" min="1" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.port" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="control-label">Connection Security :</label>
+                  <select class="form-control" ng-disabled="notifications_disabled" required ng-model="data.connectionType">
+                    <option value="Tcp">None</option>
+                    <option value="Tls">STARTTLS</option>
+                    <option value="Ssl">SSL/TLS</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Authentication Method :</label>
+                  <select id="auth" class="form-control" ng-disabled="notifications_disabled" required ng-model="data.authMethod">
+                    <option value="None">No Authentication</option>
+                    <option value="AuthPlain">Password (transmitted insecurely)</option>
+                    <option value="AuthLogin">Encrypted Password</option>
+                  </select>
+                </div>
+               <div class="form-group">
+                  <label class="control-label">SMTP Username :</label>
+                   <input type="text" id="login" class="form-control" ng-disabled="noauth || notifications_disabled" ng-required="!noauth" ng-model="data.login" />
+                </div>
+                <div class="form-group">
+                  <label class="control-label">SMTP Password :</label>
+                  <div ng-if="data.has_password">
+                    <input type="password" class="form-control" ng-disabled="noauth || notifications_disabled" ng-required="needspass" ng-model="data.password" placeholder="{{ passwordplaceholder }}" />
+                  </div>
+                  <div ng-if="!data.has_password">
+                    <input type="password" class="form-control" ng-disabled="noauth || notifications_disabled" ng-required="needspass" ng-model="data.password"/>
+                  </div>
+                </div>
+              </div>
+          </div>
+  
+  
+   
+  
+  
+  
+      <div class="form-actions" style="float:right;">
+        <button type="submit" name="go" class="btn btn-success">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

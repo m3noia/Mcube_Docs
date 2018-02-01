@@ -1,0 +1,18 @@
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs" ng-controller="device">
+      <li ng-class="{active: $state.includes('device.requests')}" ui-sref-active="active">
+        <a ui-sref="device.requests">Requests ({{ stats.requests }})</a>
+      </li>
+      <li ng-class="{active: $state.includes('device.authenticated')}" ui-sref-active="active">
+        <a ui-sref="device.authenticated">Authenticated ({{ stats.authenticated }})</a>
+      </li>
+      <li ng-class="{active: $state.includes('device.rejected')}" ui-sref-active="active">
+        <a ui-sref="device.rejected">Rejected ({{ stats.rejected }})</a>
+      </li>
+      <li ng-class="{active: $state.includes('device.revoked')}" ui-sref-active="active">
+        <a ui-sref="device.revoked">Revoked ({{ stats.revoked }})</a>
+      </li>
+    </ul>
+    <div class="tab-content" style="padding:0px; position:relative;" ui-view >
+    </div>
+  </div>

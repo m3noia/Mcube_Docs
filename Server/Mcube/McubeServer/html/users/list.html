@@ -1,0 +1,23 @@
+      <table class="table table-condensed" id="DataTables_Table_0">
+        <thead>
+          <tr role="row">
+            <th class="ui-state-default" role="columnheader" style="width:35%">Username</th>
+            <th class="ui-state-default" role="columnheader" style="width:35%">Name</th>
+            <th class="ui-state-default" role="columnheader">Status</th>
+            <th class="ui-state-default" role="columnheader" style="width:125px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+          <tr ng-repeat="user in users | orderBy : 'firstname'" data-uuid="{{ user.id }}" ng-class="{danger: user.disabled }">
+            <td><a ui-sref="users.edit({id: user.id})">{{ user.username }}</a></td>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td ng-show="user.disabled">Disabled</td>
+            <td ng-show="!user.disabled">Active</td>
+            <td>
+              <button ui-sref="users.edit({id: user.id})" style="margin-right:5px;"class="btn btn-xs btn-warning"><i class="material-icons">create</i> <span class="text">Edit</span></button>
+              <button ng-click="is_self(user.id)" ng-confirm-click="Are you sure you want to delete the user {{ user.username}} ?" confirmed-click="deleteUser(user, $index)" class="btn btn-xs btn-danger"><i class="material-icons">delete</i><span class="text">Delete</span></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <button class="btn btn-xs btn-success" ui-sref="users.create" ui-sref-active="active" ><i class="material-icons">add</i><span class="text">New</span></button>

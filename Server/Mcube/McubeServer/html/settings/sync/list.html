@@ -1,0 +1,46 @@
+
+<div class="widget-box" ng-hide="notImplimented">
+  <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+    <div style="float:right; margin-top:5px; margin-right:10px;">
+    <a class="btn btn-small btn-success" ui-sref="settings.sync.create" ui-sref-active="active" >Create</a>
+    </div>
+  </div>
+  <div class="widget-content nopadding">
+    <div class="dataTables_wrapper" role="grid">
+      <table class="table table-bordered data-table dataTable" id="DataTables_Table_0">
+        <thead>
+          <tr role="row">
+            <th class="ui-state-default" role="columnheader">Name</th>
+            <th class="ui-state-default" role="columnheader">Frequency</th>
+            <th class="ui-state-default" role="columnheader">Last Run</th>
+            <th class="ui-state-default" role="columnheader">Last Result</th>
+            <th class="ui-state-default" role="columnheader" style="width:165px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+          <tr ng-repeat="job in syncs" data-uuid="{{ job.id }}">
+            <td>{{ job.name }}</td>
+            <td>{{ job.frequency }} Min</td>
+            <td>{{ job.lastRan | date:'medium' }}</td>
+            <td>
+              <span ng-show="job.success">The sync completed successfully</span>
+              <span ng-show="job.lastRan && !job.success" style="color:red;">There was a problem with the Sync</span>
+              <span ng-show="!job.lastRan" style="color:orange">Job has never run</span>
+            </td>
+            <td>
+              <a ui-sref="settings.sync.edit({id: job.id})" class="btn btn-xs btn-warning">Edit</a>
+              <a ng-click="run(job.id)" class="btn btn-xs btn-success">Run Now</a>
+              <a ng-confirm-click="Are you sure you want to delete the sync job ?" confirmed-click="deleteSync(job, $index)" class="btn btn-xs btn-danger"><i class="material-icons">delete</i><span class="text">Delete</span></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>         
+  </div>
+</div>
+<div class="widget-box" ng-show="notImplimented">
+  <div class="widget-content" style="margin:15px;color:red;">
+    <p><strong>This feature has not been implemented for this server platform</strong></p>
+    <br />
+  </div>
+</div>

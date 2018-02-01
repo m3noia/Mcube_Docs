@@ -1,0 +1,39 @@
+
+<div class="widget-box">
+  <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+    <div style="float:right; margin-top:5px; margin-right:10px;">
+    <a class="btn btn-small btn-success" ui-sref="settings.signing.create" ui-sref-active="active" >Create</a>
+    </div>
+  </div>
+  <div class="widget-content nopadding">
+    <div class="dataTables_wrapper" role="grid">
+      <table class="table table-bordered data-table dataTable" id="DataTables_Table_0">
+        <thead>
+          <tr role="row">
+            <th class="ui-state-default" role="columnheader">Name</th>
+            <th class="ui-state-default" role="columnheader">Pattern</th>
+            <th class="ui-state-default" role="columnheader" style="width:120px;">Lifespan</th>
+            <th class="ui-state-default" role="columnheader" style="width:120px;">Device Expiry</th>
+            <th class="ui-state-default" role="columnheader" style="width:120px;">Signed Certs</th>
+            <th class="ui-state-default" role="columnheader" style="width:120px;">Active Devices</th>
+            <th class="ui-state-default" role="columnheader" style="width:105px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody role="alert" aria-live="polite" aria-relevant="all">
+          <tr ng-repeat="rule in rules" data-uuid="{{ rule.id }}">
+            <td>{{ rule.name }} - {{ rule.id }}</td>
+            <td>{{ rule.pattern }}</td>
+            <td>{{ rule.certificateLifespan }}</td>
+            <td>{{ rule.deviceExpiry }} minutes</td>
+            <td>{{ rule.info.count }}</td>
+            <td>{{ rule.info.devices.length }}</td>
+            <td>
+              <a ui-sref="settings.signing.edit({id: rule.id})" class="btn btn-xs btn-warning">Edit</a>
+              <a ng-confirm-click="Are you sure you want to delete the rule {{ rule.name }}" confirmed-click="deleteRule(rule, $index)" class="btn btn-xs btn-danger">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>         
+  </div>
+</div>

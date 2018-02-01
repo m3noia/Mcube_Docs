@@ -1,0 +1,27 @@
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: $state.includes('settings.email')}" ui-sref-active="active">
+        <a ui-sref="settings.email">Email</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.licence')}" ui-sref-active="active">
+        <a ui-sref="settings.licence">Licence</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.proxy')}" ui-sref-active="active">
+        <a ui-sref="settings.proxy">Proxy</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.sync')}" ui-sref-active="active">
+        <a ui-sref="settings.sync">Sync</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.signing')}" ui-sref-active="active">
+        <a ui-sref="settings.signing">Certificate Signing</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.backup')}" ui-sref-active="active">
+        <a ui-sref="settings.backup">Backup/Restore</a>
+      </li>
+      <li ng-class="{active: $state.includes('settings.advanced')}" ui-sref-active="active">
+        <a ui-sref="settings.advanced">Advanced</a>
+      </li>
+    </ul>
+    <div class="tab-content" style="padding:0px;" ui-view>
+    </div>
+  </div>
